@@ -1,2 +1,3 @@
 #!/bin/bash
-find . -name "*.html" -newer ../ -exec cp -u {} ../ \;
+find . -maxdepth 1 -name "*.html" -newer ../ -exec cp -u {} ../ \;
+
