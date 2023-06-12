@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "input" | sed 's/A/Z/g; s/c/e/g'
+tr "A" "Z" | tr "c" "e"
