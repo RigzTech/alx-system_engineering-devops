@@ -4,13 +4,6 @@
 # uncomment for debugging purposes.
 #set -x
 
-# for the checker to work please remove the colors.
-
-# colors
-blue='\e[1;34m'
-brown='\e[0;33m'
-reset='\033[0m'
-
 # variables & parameters
 subdomains=( "www" "lb-01" "web-01" "web-02" )
 domain="$1"
@@ -23,7 +16,7 @@ dig_cmd () {
 	IP=$(echo "$INFO" | awk '{print $5}')
 	RECORD=$(echo "$INFO" | awk '{print $4}')
 
-	echo -e "${brown}The subdomain ${blue}$sub${brown} is a ${blue}$RECORD${brown} record and points to ${blue}$IP${reset}"
+	echo -e "${}The subdomain ${blue}$sub${} is a ${}$RECORD${} record and points to ${}$IP${}"
 }
 
 if [ $# -eq 1 ]; then
