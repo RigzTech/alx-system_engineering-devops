@@ -1,6 +1,5 @@
-# Fixing Apache returning a 500 error
-
-exec { 'fix error':
-  provider => 'shell',
-  command  => 'sed -i "s/phpp/php/g" /var/www/html/wp-settings.php'
+# Fix typo in WordPress settings file
+exec { 'Fix typo in filename':
+  command  => 'sudo sed -i "s/.phpp/.php/" /var/www/html/wp-settings.php',
+  provider => shell,
 }
