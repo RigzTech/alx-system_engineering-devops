@@ -1,16 +1,20 @@
-#!/usr/bin/env bash 
-# Display information about subdomains.
+#!/usr/bin/env bash
+# Bash script displays DNS records: record type, IP, subdomains
 
-subdomaininfo () {
-    dig "$1" | grep -A1 'ANSWER SECTION:' | tail -n 1 | sed -r "s/$1./$2/g" | sed -r "s/ /\t/g" | sed -r "s/\t/ /g" | awk '{ print "The subdomain " $1 " is a " $4 " record and points to "  $5 }'
+print_record ()
+{
+    printf "The subdomain %s is a " "$2"
+    dig "$2.$1" | grep -A1 'ANSWER SECTION:' | awk -F' ' '{ printf $4 }'
+    printf " record and points to "
+    dig "$2.$1" | grep -A1 'ANSWER SECTION:' | awk -F' ' '{ printf $5 }'
+    echo ""
 }
 
-if [ "$#" -eq 2 ]
-then
-    subdomaininfo "$2.$1" "$2"
+if [ -z "$2" ]; then
+   for subs in "www" "lb-01" "web-01" "web-02"
+   do
+       print_record "$1" "$subs"
+   done
 else
-    subdomaininfo "www.$1" "www"
-    subdomaininfo "lb-01.$1" "lb-01"
-    subdomaininfo "web-01.$1" "web-01"
-    subdomaininfo "web-02.$1" "web-02"
+    print_record "$1" "$2"
 fi
